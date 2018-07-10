@@ -2,9 +2,19 @@
 
 A swiss army knife for common docker containers.
 
+## Installation
+Copy `docker-utils` to a location on your path, and make it executable:
+
+```
+sudo curl -L https://raw.githubusercontent.com/CUUATS/docker-utils/master/docker-utils -o /usr/local/bin/docker-utils
+sudo chmod +x /usr/local/bin/docker-utils
+```
+
 ## Usage
 
-`docker-utils command container`
+```
+docker-utils command container
+```
 
 ## Commands
 
