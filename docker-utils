@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Create a new PostgreSQL database.
+postgres-createdb() {
+  docker exec $1 \
+    sh -c 'PGPASSWORD=$POSTGRES_PASSWORD exec createdb -U $POSTGRES_USER -w $POSTGRES_DB'
+}
+
+# Drop a PostgreSQL database.
+postgres-dropdb() {
+  docker exec $1 \
+    sh -c 'PGPASSWORD=$POSTGRES_PASSWORD exec dropdb -U $POSTGRES_USER -w $POSTGRES_DB'
+}
+
+# Dump the contents of a PostgreSQL database in custom format.
+postgres-dump() {
+  docker exec $1 \
+    sh -c 'PGPASSWORD=$POSTGRES_PASSWORD exec pg_dump --format=custom -d $POSTGRES_DB -U $POSTGRES_USER -w'
+}
+
+# Restore the contents of a PostgreSQL database from a custom-format dump.
+postgres-restore() {
+  docker exec -i $1 \
+    sh -c 'PGPASSWORD=$POSTGRES_PASSWORD exec pg_restore -c --if-exists -d $POSTGRES_DB -U $POSTGRES_USER -w'
+}
+
+cmd=$1
+container=$2
+
+if ! [ "`type -t $cmd`" == "function" ]; then
+  >&2 echo "Error: $cmd is not a valid command"
+  exit 1
+fi
+
+running=`docker inspect -f {{.State.Running}} $container 2> /dev/null`
+if ! [ "$running" == "true" ]; then
+  >&2 echo "Error: no running container named $container"
+  exit 1
+fi
+
+$cmd $container
