@@ -18,6 +18,10 @@ docker-utils command container
 
 ## Commands
 
+### MySQL (MariaDB)
+* `mysql-dump`
+* `mysql-restore`
+
 ### PostgreSQL
 
 * `postgres-createdb`

@@ -1,5 +1,17 @@
 #!/bin/bash
 
+# Dump the contents of a MySQL database.
+mysql-dump() {
+  docker exec $1 \
+    sh -c 'exec mysqldump -uroot -p"$MYSQL_ROOT_PASSWORD" $MYSQL_DATABASE'
+}
+
+# Restore the contents of a MySQL database.
+mysql-restore() {
+  docker exec -i $1 \
+    sh -c 'exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD" $MYSQL_DATABASE'
+}
+
 # Create a new PostgreSQL database.
 postgres-createdb() {
   docker exec $1 \
