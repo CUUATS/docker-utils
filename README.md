@@ -27,6 +27,7 @@ docker-utils command container
 * `postgres-createdb`
 * `postgres-dropdb`
 * `postgres-dump`
+* `postgres-dumpall`
 * `postgres-restore`
 
 ## Credits
