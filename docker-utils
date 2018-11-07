@@ -36,6 +36,12 @@ postgres-dumpall() {
     sh -c 'PGPASSWORD=$POSTGRES_PASSWORD exec pg_dumpall -U $POSTGRES_USER -w'
 }
 
+# Executes SQL in the database cluster.
+postgres-psql() {
+  docker exec -i $1 \
+    sh -c 'PGPASSWORD=$POSTGRES_PASSWORD exec psql -U $POSTGRES_USER -w'
+}
+
 # Restore the contents of a PostgreSQL database from a custom-format dump.
 postgres-restore() {
   docker exec -i $1 \
